@@ -8,16 +8,19 @@ export default class DynamicForm extends React.Component {
       classes: ["input-field", "col", "s12", "m12", "l12"],
       formfields: [
         {
+          inputtype: "input",
           type: "text",
           key: "firstname", // should be withoutspace
           fieldname: "First Name"
         },
         {
+          inputtype: "input",
           type: "text",
           key: "lastname", // should be withoutspace
           fieldname: "Last Name"
         },
         {
+          inputtype: "input",
           type: "text",
           key: "eduqual", // should be withoutspace
           fieldname: "Qualification"

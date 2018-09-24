@@ -8,7 +8,8 @@
     "classnames": "2.2.6",
     "react": "16.4.2",
     "react-dom": "16.4.2",
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "shortid": "2.2.13"
   },
   "devDependencies": {},
   "scripts": {
