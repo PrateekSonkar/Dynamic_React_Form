@@ -52,7 +52,7 @@ export default class DynamicFormRadio extends React.Component {
                 value={formfield.value}
                 id={formfield.key || shortid.generate()}
               />
-              <span style={{ "text-transform": "capitalize" }}>
+              <span style={{ textTransform: "capitalize" }}>
                 {formfield.fieldname || formfield.value}
               </span>
             </label>

@@ -1,13 +1,20 @@
 import React from "react";
-import DynamicFormInput from "./DynamicFormInput";
-import DynamicFormCheckBox from "./DynamicFormCheckbox";
-import DynamicFormRadio from "./DynamicFormRadio";
-import DynamicFormSelect from "./DynamicFormSelect";
+import classnames from "classnames";
+// import DynamicFormInput from "./DynamicFormInput";
+// import DynamicFormCheckBox from "./DynamicFormCheckbox";
+// import DynamicFormRadio from "./DynamicFormRadio";
+// import DynamicFormSelect from "./DynamicFormSelect";
+import DFInputs from "./DFInputs";
+import DFCheckBox from "./DFCheckBox";
+import DFRadio from "./DFRadio";
+import DFSelect from "./DFSelect";
 
 export default class DynamicForm extends React.Component {
   constructor(props) {
     super(props);
+    this.initSelectDropDown = this.initSelectDropDown.bind(this);
     this.state = {
+      isDOMLoaded: false,
       classes: ["input-field", "col", "s12", "m6", "l3"],
       formfields: [
         {
@@ -87,6 +94,19 @@ export default class DynamicForm extends React.Component {
   }
 
   componentWillMount() {
+    this.setState(
+      prevState => {
+        return {
+          isDOMLoaded: true
+        };
+      },
+      () => {
+        this.initSelectDropDown();
+      }
+    );
+  }
+
+  initSelectDropDown() {
     var elems = document.querySelectorAll("select");
     var instances = M.FormSelect.init(elems);
   }
@@ -99,34 +119,49 @@ export default class DynamicForm extends React.Component {
           {this.state.formfields.map((formfield, index) => {
             switch (formfield.inputtype) {
               case "input":
-                return <div>Input</div>;
+                return (
+                  <DFInputs
+                    key={index}
+                    formfield={formfield}
+                    index={index}
+                    classes={this.state.classes}
+                    className={classnames(this.state.classes)}
+                  />
+                );
               case "radio":
-                return <div>radio</div>;
+                return (
+                  <DFRadio
+                    key={index}
+                    formfield={formfield}
+                    index={index}
+                    classes={this.state.classes}
+                    className={classnames(this.state.classes)}
+                  />
+                );
               case "checkbox":
-                return <div>checkbox</div>;
+                return (
+                  <DFCheckBox
+                    key={index}
+                    formfield={formfield}
+                    index={index}
+                    classes={this.state.classes}
+                    className={classnames(this.state.classes)}
+                  />
+                );
               case "select":
-                return <div>select</div>;
+                return (
+                  <DFSelect
+                    key={index}
+                    formfield={formfield}
+                    index={index}
+                    classes={this.state.classes}
+                    className={classnames(this.state.classes)}
+                  />
+                );
               default:
                 return <div />;
             }
           })}
-
-          <div className="row">
-            <b>input field</b>
-            <DynamicFormInput />
-          </div>
-          <div className="row">
-            <b>Checkbox</b>
-            <DynamicFormCheckBox />
-          </div>
-          <div className="row">
-            <b>Radio</b>
-            <DynamicFormRadio />
-          </div>
-          <div className="row">
-            <b>Select</b>
-            <DynamicFormSelect />
-          </div>
         </div>
       </div>
     );

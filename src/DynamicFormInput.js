@@ -59,3 +59,12 @@ export default class DynamicForm extends React.Component {
     );
   }
 }
+
+const DynamicFormInputFields = props => {
+  return (
+    <div className={classnames(this.state.classes)} key={"k" + formfield.key}>
+      <input id={formfield.key} type={formfield.type} className="validate" />
+      <label htmlFor={formfield.key}>{formfield.fieldname}</label>
+    </div>
+  );
+};
