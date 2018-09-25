@@ -13,6 +13,10 @@ const DFRadio = props => {
             name={props.formfield.radioname}
             value={props.formfield.value}
             id={props.formfield.key || shortid.generate()}
+            onClick={e => {
+              console.log("Radio Got Clicked !!");
+              props.radioOptionSelected(e, props.formfield.radioname);
+            }}
           />
           <span style={{ textTransform: "capitalize" }}>
             {props.formfield.fieldname || props.formfield.value}

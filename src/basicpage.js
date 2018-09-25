@@ -13,6 +13,8 @@ export default class DynamicForm extends React.Component {
   constructor(props) {
     super(props);
     this.initSelectDropDown = this.initSelectDropDown.bind(this);
+    this.radioOptionSelected = this.radioOptionSelected.bind(this);
+    this.checkboxOptionsSelected = this.checkboxOptionsSelected.bind(this);
     this.state = {
       isDOMLoaded: false,
       classes: ["input-field", "col", "s12", "m6", "l3"],
@@ -93,6 +95,46 @@ export default class DynamicForm extends React.Component {
     };
   }
 
+  radioOptionSelected = (e, radioname) => {
+    console.log("Value passed in : ", radioname);
+    let selectedRadioValue = document.querySelector(
+      "input[name=" + radioname + "]:checked"
+    ).value;
+    console.log(" selectedRadioValue : ", selectedRadioValue);
+    this.setState(prevState => {
+      return {
+        [radioname]: selectedRadioValue
+      };
+    });
+  };
+
+  checkboxOptionsSelected = (e, selectname) => {
+    console.log("Value passed in checkboxOptionsSelected: ", selectname);
+    let checkboxItems = [];
+    let selectedCheckboxValues = document.querySelectorAll(
+      "input[name=" + selectname + "]:checked"
+    );
+
+    selectedCheckboxValues.forEach(function(nodeElem, index) {
+      let key = "key" + index;
+      let value = nodeElem.value;
+      console.log(key, value);
+      let temp = {};
+      temp[key] = value;
+      checkboxItems.push(temp);
+    });
+    console.log(
+      " selectedCheckboxValues : ",
+      selectedCheckboxValues,
+      checkboxItems
+    );
+    this.setState(prevState => {
+      return {
+        [selectname]: checkboxItems
+      };
+    });
+  };
+
   componentWillMount() {
     this.setState(
       prevState => {
@@ -136,6 +178,7 @@ export default class DynamicForm extends React.Component {
                     index={index}
                     classes={this.state.classes}
                     className={classnames(this.state.classes)}
+                    radioOptionSelected={this.radioOptionSelected}
                   />
                 );
               case "checkbox":
@@ -146,6 +189,7 @@ export default class DynamicForm extends React.Component {
                     index={index}
                     classes={this.state.classes}
                     className={classnames(this.state.classes)}
+                    checkboxOptionsSelected={this.checkboxOptionsSelected}
                   />
                 );
               case "select":

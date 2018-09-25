@@ -12,6 +12,9 @@ const DFCheckBox = props => {
             name={props.formfield.checkboxname}
             value={props.formfield.value}
             id={props.formfield.key || shortid.generate()}
+            onClick={e => {
+              props.checkboxOptionsSelected(e, props.formfield.checkboxname);
+            }}
           />
           <span style={{ textTransform: "capitalize" }}>
             {props.formfield.fieldname || props.formfield.value}
