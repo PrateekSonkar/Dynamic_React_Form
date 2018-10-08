@@ -6,7 +6,13 @@ const DFSelect = props => {
     <div key={props.formfield.ukey} className={classnames(props.classes)}>
       <div>
         <label>
-          <select defaultValue="none">
+          <select
+            defaultValue="none"
+            onChange={e => {
+              props.onDropDownChange(e, props.formfield.selectname);
+            }}
+            name={props.formfield.selectname}
+          >
             <option value="none">Choose your option</option>
             {props.formfield.options.map((optionelem, index) => (
               <option value={optionelem.value} key={index + optionelem.value}>

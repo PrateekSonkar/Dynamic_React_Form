@@ -4,6 +4,7 @@ import classnames from "classnames";
 // import DynamicFormCheckBox from "./DynamicFormCheckbox";
 // import DynamicFormRadio from "./DynamicFormRadio";
 // import DynamicFormSelect from "./DynamicFormSelect";
+import datasource from "../datasource/datasource";
 import DFInputs from "./DFInputs";
 import DFCheckBox from "./DFCheckBox";
 import DFRadio from "./DFRadio";
@@ -15,84 +16,13 @@ export default class DynamicForm extends React.Component {
     this.initSelectDropDown = this.initSelectDropDown.bind(this);
     this.radioOptionSelected = this.radioOptionSelected.bind(this);
     this.checkboxOptionsSelected = this.checkboxOptionsSelected.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onDropDownChange = this.onDropDownChange.bind(this);
     this.state = {
-      isDOMLoaded: false,
-      classes: ["input-field", "col", "s12", "m6", "l3"],
-      formfields: [
-        {
-          inputtype: "input",
-          type: "text",
-          key: "firstname", // should be withoutspace
-          fieldname: "First Name"
-        },
-        {
-          inputtype: "input",
-          type: "text",
-          key: "lastname", // should be withoutspace
-          fieldname: "Last Name"
-        },
-        {
-          inputtype: "input",
-          type: "text",
-          key: "eduqual", // should be withoutspace
-          fieldname: "Qualification"
-        },
-        {
-          inputtype: "checkbox",
-          key: "firstname", // should be withoutspace
-          fieldname: "color red",
-          value: "red",
-          checkboxname: "colors"
-        },
-        {
-          inputtype: "checkbox",
-          key: "firstname1", // should be withoutspace
-          fieldname: "color blue",
-          value: "blue",
-          checkboxname: "colors"
-        },
-        {
-          inputtype: "checkbox",
-          key: "firstname2", // should be withoutspace
-          fieldname: "color green",
-          value: "green",
-          checkboxname: "colors"
-        },
-        {
-          inputtype: "radio",
-          type: "radio",
-          key: "firstname", // should be withoutspace
-          fieldname: "color red",
-          value: "red",
-          radioname: "rcolors"
-        },
-        {
-          inputtype: "radio",
-          type: "radio",
-          key: "firstname1", // should be withoutspace
-          fieldname: "color blue",
-          value: "blue",
-          radioname: "rcolors"
-        },
-        {
-          inputtype: "radio",
-          type: "radio",
-          key: "firstname2", // should be withoutspace
-          fieldname: "color green",
-          value: "green",
-          radioname: "rcolors"
-        },
-        {
-          inputtype: "select",
-          ukey: "firstname", // should be withoutspace
-          options: [
-            { value: "abc", fieldname: "No thing" },
-            { value: "abc1", fieldname: "No thing 1" },
-            { value: "abc2", fieldname: "No thing 2" }
-          ]
-        }
-      ]
+      isDOMLoaded: false
     };
+
+    console.log("Datasource ", datasource);
   }
 
   radioOptionSelected = (e, radioname) => {
@@ -108,13 +38,21 @@ export default class DynamicForm extends React.Component {
     });
   };
 
+  onChange = (e, inputname) => {
+    let value = e.target.value.trim();
+    this.setState(prevState => {
+      return {
+        [inputname]: value
+      };
+    });
+  };
+
   checkboxOptionsSelected = (e, selectname) => {
     console.log("Value passed in checkboxOptionsSelected: ", selectname);
     let checkboxItems = [];
     let selectedCheckboxValues = document.querySelectorAll(
       "input[name=" + selectname + "]:checked"
     );
-
     selectedCheckboxValues.forEach(function(nodeElem, index) {
       let key = "key" + index;
       let value = nodeElem.value;
@@ -123,17 +61,22 @@ export default class DynamicForm extends React.Component {
       temp[key] = value;
       checkboxItems.push(temp);
     });
-    console.log(
-      " selectedCheckboxValues : ",
-      selectedCheckboxValues,
-      checkboxItems
-    );
     this.setState(prevState => {
       return {
         [selectname]: checkboxItems
       };
     });
   };
+
+  onDropDownChange(e, name) {
+    let option = e.target.value;
+    console.log("onDropDownChange : ", option, name);
+    this.setState(prevState => {
+      return {
+        [name]: option
+      };
+    });
+  }
 
   componentWillMount() {
     this.setState(
@@ -148,6 +91,11 @@ export default class DynamicForm extends React.Component {
     );
   }
 
+  onSubmit(e) {
+    e.preventDefault();
+    console.log("On Submit !!");
+  }
+
   initSelectDropDown() {
     var elems = document.querySelectorAll("select");
     var instances = M.FormSelect.init(elems);
@@ -158,54 +106,59 @@ export default class DynamicForm extends React.Component {
       <div>
         <h5>Dynamic Form</h5>
         <div className="container">
-          {this.state.formfields.map((formfield, index) => {
-            switch (formfield.inputtype) {
-              case "input":
-                return (
-                  <DFInputs
-                    key={index}
-                    formfield={formfield}
-                    index={index}
-                    classes={this.state.classes}
-                    className={classnames(this.state.classes)}
-                  />
-                );
-              case "radio":
-                return (
-                  <DFRadio
-                    key={index}
-                    formfield={formfield}
-                    index={index}
-                    classes={this.state.classes}
-                    className={classnames(this.state.classes)}
-                    radioOptionSelected={this.radioOptionSelected}
-                  />
-                );
-              case "checkbox":
-                return (
-                  <DFCheckBox
-                    key={index}
-                    formfield={formfield}
-                    index={index}
-                    classes={this.state.classes}
-                    className={classnames(this.state.classes)}
-                    checkboxOptionsSelected={this.checkboxOptionsSelected}
-                  />
-                );
-              case "select":
-                return (
-                  <DFSelect
-                    key={index}
-                    formfield={formfield}
-                    index={index}
-                    classes={this.state.classes}
-                    className={classnames(this.state.classes)}
-                  />
-                );
-              default:
-                return <div />;
-            }
-          })}
+          <form onSubmit={this.onSubmit}>
+            {datasource.formfields.map((formfield, index) => {
+              switch (formfield.inputtype) {
+                case "input":
+                  return (
+                    <DFInputs
+                      key={index}
+                      formfield={formfield}
+                      index={index}
+                      classes={datasource.classes}
+                      className={classnames(datasource.classes)}
+                      onChange={this.onChange}
+                    />
+                  );
+                case "radio":
+                  return (
+                    <DFRadio
+                      key={index}
+                      formfield={formfield}
+                      index={index}
+                      classes={datasource.classes}
+                      className={classnames(datasource.classes)}
+                      radioOptionSelected={this.radioOptionSelected}
+                    />
+                  );
+                case "checkbox":
+                  return (
+                    <DFCheckBox
+                      key={index}
+                      formfield={formfield}
+                      index={index}
+                      classes={datasource.classes}
+                      className={classnames(datasource.classes)}
+                      checkboxOptionsSelected={this.checkboxOptionsSelected}
+                    />
+                  );
+                case "select":
+                  return (
+                    <DFSelect
+                      key={index}
+                      formfield={formfield}
+                      index={index}
+                      classes={datasource.classes}
+                      className={classnames(datasource.classes)}
+                      onDropDownChange={this.onDropDownChange}
+                    />
+                  );
+                default:
+                  return <div />;
+              }
+            })}
+            <button>Submit</button>
+          </form>
         </div>
       </div>
     );
