@@ -3,7 +3,11 @@ import classnames from "classnames";
 
 const DFSelect = props => {
   return (
-    <div key={props.formfield.ukey} className={classnames(props.classes)}>
+    <div
+      key={props.formfield.ukey}
+      className={classnames(props.classes)}
+      rel={props.formfield.selectname}
+    >
       <div>
         <label>
           <select

@@ -1,5 +1,23 @@
 const datasource = {
   classes: ["input-field", "col", "s12", "m6", "l3"],
+  visibleform: "input",
+  interimInput: {
+    inputtype: "",
+    type: "",
+    key: "",
+    fieldname: "",
+    required: null
+  },
+  interimrest: {
+    inputtype: "",
+    checkboxname: "",
+    options: []
+  },
+
+  form: {
+    name: "abc",
+    fields: []
+  },
   formfields: [
     {
       inputtype: "input",
@@ -22,48 +40,47 @@ const datasource = {
     },
     {
       inputtype: "checkbox",
-      key: "firstname", // should be withoutspace
-      fieldname: "color red",
-      value: "red",
-      checkboxname: "colors"
-    },
-    {
-      inputtype: "checkbox",
-      key: "firstname1", // should be withoutspace
-      fieldname: "color blue",
-      value: "blue",
-      checkboxname: "colors"
-    },
-    {
-      inputtype: "checkbox",
-      key: "firstname2", // should be withoutspace
-      fieldname: "color green",
-      value: "green",
-      checkboxname: "colors"
-    },
-    {
-      inputtype: "radio",
-      type: "radio",
-      key: "firstname", // should be withoutspace
-      fieldname: "color red",
-      value: "red",
-      radioname: "rcolors"
+      checkboxname: "colors",
+      options: [
+        {
+          key: "firstname2", // should be withoutspace
+          fieldname: "color green",
+          value: "green"
+        },
+        {
+          key: "firstname1", // should be withoutspace
+          fieldname: "color blue",
+          value: "blue"
+        },
+        {
+          key: "firstname", // should be withoutspace
+          fieldname: "color red",
+          value: "red"
+        }
+      ]
     },
     {
       inputtype: "radio",
       type: "radio",
-      key: "firstname1", // should be withoutspace
-      fieldname: "color blue",
-      value: "blue",
-      radioname: "rcolors"
-    },
-    {
-      inputtype: "radio",
-      type: "radio",
-      key: "firstname2", // should be withoutspace
-      fieldname: "color green",
-      value: "green",
-      radioname: "rcolors"
+      radioname: "rcolors",
+      radioclasses: ["input-field", "col", "s12", "m3", "l3"],
+      options: [
+        {
+          key: "firstname2", // should be withoutspace
+          fieldname: "color green",
+          value: "green"
+        },
+        {
+          key: "firstname1", // should be withoutspace
+          fieldname: "color blue",
+          value: "blue"
+        },
+        {
+          key: "firstname", // should be withoutspace
+          fieldname: "color red",
+          value: "red"
+        }
+      ]
     },
     {
       inputtype: "select",
