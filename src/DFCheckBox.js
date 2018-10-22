@@ -7,7 +7,7 @@ const DFCheckBox = props => {
     <div
       key={"cb" + props.formfield.key}
       className={classnames(props.classes)}
-      rel={props.formfield.checkboxname}
+      rel={props.formfield.name}
     >
       {props.formfield.options.map((option, index) => {
         return (
@@ -15,18 +15,15 @@ const DFCheckBox = props => {
             <label>
               <input
                 type={props.formfield.inputtype || "checkbox"}
-                name={props.formfield.checkboxname}
+                name={props.formfield.name}
                 value={option.value}
                 id={option.key || shortid.generate()}
                 onClick={e => {
-                  props.checkboxOptionsSelected(
-                    e,
-                    props.formfield.checkboxname
-                  );
+                  props.checkboxOptionsSelected(e, props.formfield.name);
                 }}
               />
               <span style={{ textTransform: "capitalize" }}>
-                {option.fieldname || option.value}
+                {option.label || option.value}
               </span>
             </label>
           </div>

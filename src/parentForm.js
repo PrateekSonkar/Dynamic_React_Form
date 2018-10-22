@@ -1,6 +1,9 @@
 import React from "react";
 import InputProperty from "./inputFieldProperties";
 import RadioProperty from "./radioFieldProperties";
+import CheckBoxProperties from "./checkBoxFieldProperties";
+import SelectProperties from "./selectFieldProperties";
+import FormFieldsInfo from "./formInfo";
 
 export default class ParentForm extends React.Component {
   constructor(props) {
@@ -9,6 +12,7 @@ export default class ParentForm extends React.Component {
     this.handlePropertiesSubmit = this.handlePropertiesSubmit.bind(this);
     this.handleInputOnChange = this.handleInputOnChange.bind(this);
     this.addInputFieldToForm = this.addInputFieldToForm.bind(this);
+    this.createForm = this.createForm.bind(this);
     this.state = {
       formname: null,
       collectionname: "",
@@ -62,6 +66,10 @@ export default class ParentForm extends React.Component {
         formfields: prevState.formfields.concat([payload])
       };
     });
+  }
+
+  createForm() {
+    console.log("createForm ", this.state);
   }
 
   render() {
@@ -118,16 +126,30 @@ export default class ParentForm extends React.Component {
               </div>
             </div>
             <div className="row">
-              <b>Form Fields Properties</b>
               {this.state.visibleform === "input" ? (
                 <InputProperty addInputFieldToForm={this.addInputFieldToForm} />
               ) : null}
               {this.state.visibleform === "radio" ? (
                 <RadioProperty addInputFieldToForm={this.addInputFieldToForm} />
               ) : null}
+              {this.state.visibleform === "checkbox" ? (
+                <CheckBoxProperties
+                  addInputFieldToForm={this.addInputFieldToForm}
+                />
+              ) : null}
+              {this.state.visibleform === "select" ? (
+                <SelectProperties
+                  addInputFieldToForm={this.addInputFieldToForm}
+                />
+              ) : null}
             </div>
           </div>
-          <div className="col s6">preview</div>
+          <div className="col s6">
+            <FormFieldsInfo
+              formfields={this.state.formfields}
+              createForm={this.createForm}
+            />
+          </div>
         </div>
       </div>
     );

@@ -5,9 +5,9 @@ import shortid from "shortid";
 const DFRadio = props => {
   return (
     <div
-      key={props.formfield.key}
+      key={"r" + props.formfield.id}
       className={classnames(props.classes)}
-      rel={props.formfield.radioname}
+      rel={props.formfield.name}
     >
       {props.formfield.options.map((option, index) => {
         return (
@@ -16,16 +16,16 @@ const DFRadio = props => {
               <input
                 className="with-gap"
                 type={props.formfield.inputtype || "radio"}
-                name={props.formfield.radioname}
+                name={props.formfield.name}
                 value={option.value}
                 id={option.key || shortid.generate()}
                 onClick={e => {
                   console.log("Radio Got Clicked !!");
-                  props.radioOptionSelected(e, props.formfield.radioname);
+                  props.radioOptionSelected(e, props.formfield.name);
                 }}
               />
               <span style={{ textTransform: "capitalize" }}>
-                {option.fieldname || option.value}
+                {option.label || option.value}
               </span>
             </label>
           </div>

@@ -15,7 +15,8 @@ export default class InputProperties extends React.Component {
       customerrmsg: null,
       key: null,
       id: null,
-      type: "text"
+      type: "text",
+      inputtype: "input"
     };
   }
 
@@ -74,23 +75,27 @@ export default class InputProperties extends React.Component {
     e.persist();
     document.getElementById("labelname").value = null;
     let payload = Object.assign({}, this.state);
-    this.setState(prevState => {
-      return {
-        inputtype: "input",
-        labelname: null,
-        name: null, // will be label name withoutspaces
-        defaultvalue: null,
-        required: false,
-        customerrmsg: null,
-        key: null,
-        id: shortid.generate()
-      };
-    });
     this.props.addInputFieldToForm(payload);
-    document.getElementById("labelname").value = null;
-    document.getElementById("errormsg").value = null;
-    document.getElementById("defaultvalue").value = null;
-    //document.querySelectorAll("input[name=required]:checked")
+    this.setState(
+      prevState => {
+        return {
+          inputtype: "input",
+          labelname: null,
+          name: null, // will be label name withoutspaces
+          defaultvalue: null,
+          required: false,
+          customerrmsg: null,
+          key: null,
+          id: shortid.generate()
+        };
+      },
+      () => {
+        document.getElementById("labelname").value = null;
+        document.getElementById("errormsg").value = null;
+        document.getElementById("defaultvalue").value = null;
+        //document.querySelectorAll("input[name=required]:checked")
+      }
+    );
   }
 
   render() {
@@ -100,6 +105,9 @@ export default class InputProperties extends React.Component {
           this.handleFormOnSubmit(e);
         }}
       >
+        <div className="row">
+          <h5>Create Input Options</h5>
+        </div>
         <div className="input-field col s12">
           <input
             id="labelname"
@@ -183,7 +191,7 @@ export default class InputProperties extends React.Component {
           />
           <label htmlFor="error_msg">Custom Error Message</label>
         </div>
-        <button className="waves-effect waves-light btn"> Save </button>
+        <button className="waves-effect waves-light btn">Add to Form</button>
       </form>
     );
   }

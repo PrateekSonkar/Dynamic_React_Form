@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./basicpage";
 import { BrowserRouter, Route, Switch, Link, NavLink } from "react-router-dom";
 import ParentForm from "./parentForm";
+import Header from "./Header";
 
 import "./styles.css";
 
@@ -11,7 +12,7 @@ const Routes = () => {
     <div>
       <BrowserRouter>
         <div>
-          {/*<Header />*/}
+          <Header />
           <Switch>
             <Route path="/" component={App} exact={true} />
             <Route path="/abc" component={ParentForm} exact={true} />

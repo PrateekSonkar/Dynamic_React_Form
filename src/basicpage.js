@@ -166,20 +166,20 @@ export default class DynamicForm extends React.Component {
     });
   }
 
-  updateFormObject(formObject, toBeUpdated) {}
-
   render() {
     return (
-      <div>
-        <h5>{datasource.formtitle || "Form"}</h5>
-        {/*<div className="container">
+      <div className="container">
+        <h5 style={{ textTransform: "capitalize" }}>
+          {datasource.formname || "Form"}
+        </h5>
+        <div>
           <form onSubmit={this.onSubmit}>
             {datasource.formfields.map((formfield, index) => {
               switch (formfield.inputtype) {
                 case "input":
                   return (
                     <DFInputs
-                      key={index}
+                      key={formfield.id + index}
                       formfield={formfield}
                       index={index}
                       classes={datasource.classes}
@@ -190,7 +190,7 @@ export default class DynamicForm extends React.Component {
                 case "radio":
                   return (
                     <DFRadio
-                      key={index}
+                      key={formfield.id + index}
                       formfield={formfield}
                       index={index}
                       classes={datasource.classes}
@@ -201,7 +201,7 @@ export default class DynamicForm extends React.Component {
                 case "checkbox":
                   return (
                     <DFCheckBox
-                      key={index}
+                      key={formfield.id + index}
                       formfield={formfield}
                       index={index}
                       classes={datasource.classes}
@@ -212,7 +212,7 @@ export default class DynamicForm extends React.Component {
                 case "select":
                   return (
                     <DFSelect
-                      key={index}
+                      key={formfield.id + index}
                       formfield={formfield}
                       index={index}
                       classes={datasource.classes}
@@ -226,17 +226,6 @@ export default class DynamicForm extends React.Component {
             })}
             <button>Submit</button>
           </form>
-        </div>*/}
-        <div className="container">
-          <CreateForm
-            handleFormView={this.handleFormView}
-            visibleType={this.state.visibleform}
-            onRadioChange={this.onRadioChange}
-            addNewFieldToForm={this.addNewFieldToForm}
-            addNewOption={this.addNewOption}
-            saveFormToDB={this.saveFormToDB}
-            subFormOnChange={this.subFormOnChange}
-          />
         </div>
       </div>
     );

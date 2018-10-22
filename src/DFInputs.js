@@ -5,7 +5,7 @@ const DFInputFields = props => {
   return (
     <div
       className={classnames(props.classes)}
-      key={"k" + props.formfield.key}
+      key={"k" + props.formfield.id}
       rel={props.formfield.key}
     >
       <input
@@ -18,7 +18,7 @@ const DFInputFields = props => {
         }}
         required={props.formfield.required ? true : false}
       />
-      <label htmlFor={props.formfield.key}>{props.formfield.fieldname}</label>
+      <label htmlFor={props.formfield.key}>{props.formfield.labelname}</label>
     </div>
   );
 };

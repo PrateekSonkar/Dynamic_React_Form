@@ -1,7 +1,7 @@
 import React from "react";
 import shortid from "shortid";
 
-export default class RadioProperties extends React.Component {
+export default class selectProperties extends React.Component {
   constructor(props) {
     super(props);
     this.handleInputOnChange = this.handleInputOnChange.bind(this);
@@ -11,8 +11,8 @@ export default class RadioProperties extends React.Component {
       name: null, // will be label name withoutspaces
       key: null,
       id: null,
-      type: "radio",
-      inputtype: "radio",
+      type: "select",
+      inputtype: "select",
       options: []
     };
   }
@@ -51,11 +51,11 @@ export default class RadioProperties extends React.Component {
     console.log("addItemToTable");
     let obj = {};
     if (
-      Boolean(document.getElementById("rlabelname").value) &&
-      Boolean(document.getElementById("rlabelvalue").value)
+      Boolean(document.getElementById("clabelname").value) &&
+      Boolean(document.getElementById("clabelvalue").value)
     ) {
-      obj["label"] = document.getElementById("rlabelname").value;
-      obj["value"] = document.getElementById("rlabelvalue").value;
+      obj["label"] = document.getElementById("clabelname").value;
+      obj["value"] = document.getElementById("clabelvalue").value;
       this.setState(
         prevState => {
           return {
@@ -63,8 +63,8 @@ export default class RadioProperties extends React.Component {
           };
         },
         () => {
-          document.getElementById("rlabelname").value = "";
-          document.getElementById("rlabelvalue").value = "";
+          document.getElementById("clabelname").value = "";
+          document.getElementById("clabelvalue").value = "";
         }
       );
     } else {
@@ -82,7 +82,7 @@ export default class RadioProperties extends React.Component {
           labelname: null,
           name: null, // will be label name withoutspaces
           key: null,
-          type: "radio",
+          type: "checkbox",
           options: [],
           id: shortid.generate()
         };
@@ -102,7 +102,7 @@ export default class RadioProperties extends React.Component {
         }}
       >
         <div className="row">
-          <h5>Create Radio Options</h5>
+          <h5>Create Select Options</h5>
         </div>
         <div className="row">
           <div className="input-field col s12">
@@ -123,13 +123,13 @@ export default class RadioProperties extends React.Component {
           <strong>Create Options</strong>
           <div>
             <div className="input-field col s5">
-              <input id="rlabelname" type="text" className="validate" />
-              <label htmlFor="rlabelname">Label</label>
+              <input id="clabelname" type="text" className="validate" />
+              <label htmlFor="clabelname">Label</label>
               <span className="helper-text" data-error="Mandatory Field" />
             </div>
             <div className="input-field col s5">
-              <input id="rlabelvalue" type="text" className="validate" />
-              <label htmlFor="rlabelvalue">Value</label>
+              <input id="clabelvalue" type="text" className="validate" />
+              <label htmlFor="clabelvalue">Value</label>
               <span className="helper-text" data-error="Mandatory Field" />
             </div>
             <div className="input-field col s2">

@@ -4,23 +4,23 @@ import classnames from "classnames";
 const DFSelect = props => {
   return (
     <div
-      key={props.formfield.ukey}
+      key={"sl" + props.formfield.key}
       className={classnames(props.classes)}
-      rel={props.formfield.selectname}
+      rel={props.formfield.name}
     >
       <div>
         <label>
           <select
             defaultValue="none"
             onChange={e => {
-              props.onDropDownChange(e, props.formfield.selectname);
+              props.onDropDownChange(e, props.formfield.name);
             }}
-            name={props.formfield.selectname}
+            name={props.formfield.name}
           >
             <option value="none">Choose your option</option>
             {props.formfield.options.map((optionelem, index) => (
               <option value={optionelem.value} key={index + optionelem.value}>
-                {optionelem.fieldname || optionelem.value}
+                {optionelem.label || optionelem.value}
               </option>
             ))}
           </select>
